@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>490 Advisors</title>
+        <link rel="stylesheet" href="static/styles.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>List of Advisors</h1>
+        </div>
+
+        {% include 'tabs.html' %}
+        
+        <div id="container">
+            <ul id="results">
+                {% for advisor in data %}
+                <li class="name" onclick="location.href='/advisors?id={{advisor.id}}';">
+                    <h3 class="advisor">{{advisor.name}}</h3>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>        
+    </body>
+</html>

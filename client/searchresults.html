@@ -1,0 +1,7 @@
+{% for row in data %}
+<li class="name" onclick="location.href='/projects?id={{row.project_id}}';">
+    <h3>{{row.title}}</h3>
+    <p class="student">Student: {{row.student}}</p>
+    <p class="advisor">Advisors: {{row.advisors_str}}</p>
+</li>
+{% endfor %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>490 Projects</title>
+        <link rel="stylesheet" href="static/styles.css">
+    </head>
+
+    <body>
+        <div class="header">
+            {% if is_liked %}
+            <h1>{{data.title}} <span id="favorite" class='favoriteButton liked'></span></h1>
+            {% else %}
+            <h1>{{data.title}} <span id="favorite" class='favoriteButton'></span></h1>
+            {% endif %}
+        </div>
+
+        {% include 'tabs.html' %}
+        
+        <h2 class="subheader">Author: {{data.student}}</h2>
+        <h2 class="subheader">Advisors:
+            {% if data.advisor_info %}
+                {% for advisor in data.advisor_info %}
+                    {% if loop.last %} 
+                        <a href="/advisors?id={{advisor[0]}}">{{advisor[1]}}</a></h2>
+                    {% else %}
+                        <a href="/advisors?id={{advisor[0]}}">{{advisor[1]}}, </a>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                N/A
+            {% endif %}
+        <h2 class="subheader">Semester: {{data.semester}} {{data.year}}</h2>
+        <div class="content">
+            <p>{{data.abstract}}</p>
+            <a href="{{data.homepage}}" target="_blank"><button class="redirectSearch">See more here</button></a>
+        </div>
+
+        {% if is_authorized %}
+        <div class="center">
+            <a href="/projects/edit?id={{id}}" class="updateProjectButton">Edit/Delete Project</a>
+        </div>
+        {% endif %}
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <script>
+            'use strict';
+
+            function getResults() {
+                const button = document.getElementById("favorite");
+        
+                let url = 'api/favorite?id={{id}}'
+        
+                if (button.classList.contains("liked")) {
+                    button.classList.remove("liked");
+    
+                    $.ajax({
+                        type: 'DELETE',
+                        url: url
+                    });
+                }
+                else {
+                    button.classList.add("liked");
+
+                    $.ajax({
+                        type: 'POST',
+                        url: url
+                    });
+                }
+            }
+
+            function setup() {
+                $('#favorite').on('click', getResults);
+            }
+
+            $('document').ready(setup);
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>490 Projects</title>
+        <link rel="stylesheet" href="static/styles.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Previous Projects</h1>
+        </div>
+
+        {% include 'tabs.html' %}
+        
+        <div id="container">
+            <ul id="results">
+                {% for proj in data %}
+                <li class="name" onclick="location.href='/projects?id={{proj.id}}';">
+                    <h3>{{proj.title}}</h3>
+                    <p class="student">{{proj.student}}</p>
+                    <p class="advisor">Advisors:
+                        {% if proj.advisor %}
+                            {% for name in proj.advisor %}
+                                {% if loop.last %}
+                                    {{name}}
+                                {% else %}
+                                    {{name}}, 
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            N/A
+                        {% endif %}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+    </body>
+</html>

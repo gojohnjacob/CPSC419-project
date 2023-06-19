@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{data[0].advisor}}</title>
+        <link rel="stylesheet" href="static/styles.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Advisor Profile: {{data[0].advisor}}</h1>
+        </div>
+
+        {% include 'tabs.html' %}
+
+        <div id="container">
+            <h1>List of Projects Supervised:</h1>
+            <ul id="results">
+                {% for proj in data[1:] %}
+                <li class="name" onclick="location.href='/projects?id={{proj.project_id}}';">
+                    <h3>{{proj.title}}</h3>
+                    <p class="student">{{proj.student}}</p>
+                    <p class="semester">{{proj.semester}} {{proj.year}}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </body>
+</html>

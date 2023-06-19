@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Yale CPSC 490</title>
+        <link rel="stylesheet" href="static/styles.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Welcome to Yale's CS Senior Project Website!</h1>
+        </div>
+
+        {% include 'tabs.html' %}
+        <!-- General content -->
+        <div class="content">
+            <h2>Description</h2>
+            <p style="font-size: 20px;">
+                Seniors enrolled in CPSC 490 must perform individual research 
+                to fulfill the senior requirement. 
+
+                Requires a faculty supervisor and the permission of the director 
+                of undergraduate studies. The student must submit a written report 
+                about the results of the project. May be taken more than once for 
+                credit.
+            </p>
+
+            <div class="center">
+                <a href="/projects/add" class="updateProjectButton">Add a New Project</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>Featured Project</h2>
+            <ul id="results">
+                {% for proj in data %}
+                    <li class="name" onclick="location.href='/projects?id={{proj.id}}';">
+                        <h3>{{proj.title}}</h3>
+                        <p class="student">{{proj.student}}</p>
+                        <p class="advisor">Advisors: 
+                            {% if proj.advisor %}
+                                {% for advisor in proj.advisor %}
+                                    {% if loop.last %}
+                                        {{advisor}}
+                                    {% else %}
+                                        {{advisor}}, 
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+    </body>
+</html>

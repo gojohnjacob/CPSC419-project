@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>490 Projects</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Add a New Project</h1>
+        </div>
+
+        {% include 'tabs.html' %}
+
+        <div class="content">
+            </br>
+            <h3>Please fill out the following form to add a new project.</h3>
+
+            <form id="add_project" action="/projects" method="POST">
+                <label type="text" for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label type="text" for="net_id">NetID</label>
+                <input type="text" id="net_id" name="net_id" placeholder="Leave blank if this is your project.">
+
+                <label type="text" for="semester">Semester:</label>
+                <select class="selectSemester" id="semester" name="semester">
+                    <option value="Spring">Spring</option>
+                    <option value="Fall">Fall</option>
+                  </select>
+
+                <label type="text" for="year">Year:</label>
+                <input type="text" id="year" name="year" required pattern="^[12][0-9]{3}$" oninvalid="this.setCustomValidity('Please enter valid year')"
+                oninput="setCustomValidity('')">
+
+                <label for="advisor">Advisor(s)</label>
+                <input type="text" id="advisor" name="advisor" placeholder="If more than one, please list all with a comma in between each." required>
+
+                <label for="title">Project Title</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="abstract">Project Abstract</label>
+
+                <textarea id="abstract" rows="5" cols="60" name="abstract" required></textarea>
+
+                <label for="homepage">Homepage</label>
+                <input type="text" id="homepage" name="homepage" placeholder="Please add the link to your main project website." required>
+
+                <div class="center">
+                    <input type="submit" class="updateButton" name="action" value="Add Project">
+                </div>
+            </form>
+        </div>
+        
+    </body>
+</html>

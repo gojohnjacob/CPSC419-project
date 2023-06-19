@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>490 Search</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+
+        <link rel="stylesheet" href="static/styles.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Search for Previous Projects</h1>
+        </div>
+
+        {% include 'tabs.html' %}
+
+        <br>
+
+        <div class="container-fluid">
+
+            <div class="col">
+
+                <div class="btn-group">
+                        
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="advisor-button">
+
+                            <option value ="" selected>Advisor</option>
+                            {% for row in advisors %}
+                            {{row}}
+                            <option value="{{row.advisor_id}}">{{row.advisor}}</option>
+                            {% endfor %}
+
+                        </select>
+                        
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                        
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="year-button">
+                        
+                            <option value="" selected>Year</option>
+                            {% for row in year %}
+                            <option value="{{row.year}}">{{row.year}}</option>
+                            {% endfor %}
+
+                        </select>
+                        
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                        
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="semester-button">
+
+                            <option value ="" selected>Semester</option>
+                            {% for row in semester %}
+                            <option value="{{row.semester}}">{{row.semester}}</option>
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+                </div>
+
+            </div>
+
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Search for projects..." id="searchInput">
+
+                </div>
+            
+            <br>
+            
+            <div id="results">
+                {% for row in data %}
+                <li class="name" onclick="location.href='projects?id={{row.project_id}}';">
+                    <h3>{{row.title}}</h3>
+                    <p class="student">Student: {{row.student}}</p>
+                    <p class="advisor">Advisors: {{row.advisors_str}}</p>
+                </li>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <script>
+            'use strict';
+
+            function handleResponse(response)
+            {
+                let inner = ''
+                if (response !== '')
+                    inner = response
+                $('#results').html(inner);
+            }
+
+            let request = null
+
+            function getResults()
+            {
+                let parameter = encodeURIComponent($('#searchInput').val());
+                let year = encodeURIComponent($('#year-button').val());
+                let advisor = encodeURIComponent($('#advisor-button').val());
+                let semester = encodeURIComponent($('#semester-button').val());
+                
+                let url = '/searchresults?parameter=' + parameter + "&year=" + year + "&advisor=" + advisor + "&semester=" + semester
+
+                if (request != null)
+                    request.abort();
+                
+                request = $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success: handleResponse
+                });
+            }
+
+            function setup()
+            {
+                $('#searchInput').on('input', getResults);
+                $('#year-button').on('input', getResults);
+                $('#advisor-button').on('input', getResults);
+                $('#semester-button').on('input', getResults);
+            }
+
+            $('document').ready(setup);
+        </script>
+    </body>
+</html>

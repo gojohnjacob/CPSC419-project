@@ -1,0 +1,48 @@
+<div class="tab">
+    <button class="tablinks" id="homeButton">Home</button>
+    <button class="tablinks" id="searchButton">Search</button>
+    <button class="tablinks" id="projectsButton">Projects</button>
+    <button class="tablinks" id="advisorsButton">Advisors</button>
+    <button class="tablinks" id="favoritesButton">Favorites</button>
+    <button class="tablinks" id="faqButton">FAQs</button>
+    <button class="tablinks" id="logoutButton">Log Out</button>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+<script type="text/javascript">
+    document.getElementById("homeButton").onclick = function () {
+        location.href = "/index";
+    };
+    document.getElementById("searchButton").onclick = function () {
+        location.href = "/search";
+    };
+    document.getElementById("faqButton").onclick = function () {
+        location.href = "/faq";
+    };
+    document.getElementById("projectsButton").onclick = function () {
+        location.href = "/projects/index";
+    };
+    document.getElementById("advisorsButton").onclick = function () {
+        location.href = "/advisors";
+    };
+    document.getElementById("logoutButton").onclick = function () {
+        location.href = "/logout";
+    };
+    document.getElementById("favoritesButton").onclick = function () {
+        location.href = "/favorites";
+    };
+</script>

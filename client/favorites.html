@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>490 Favorites</title>
+        <link rel="stylesheet" href="static/styles.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Favorited Projects</h1>
+        </div>
+
+        {% include 'tabs.html' %}
+
+        <div id="container">
+            {% if favs %}
+                <div id="results">
+                    {% for fav in favs %}
+                        <div class="name" onclick="location.href='projects?id={{fav.id}}';">
+                            <div class="flex-container">
+                                <div class="flex-child-content">
+                                    <h2>{{fav.title}}</h2>
+                                    <p class="student">Student: {{fav.student}}</p>
+                                    <p class="advisor">Advisors:
+                                        {% if fav.advisor_info %}
+                                            {% for advisor in fav.advisor_info %}
+                                                {% if loop.last %}
+                                                    {{advisor[1]}}
+                                                {% else %}
+                                                    {{advisor[1]}},
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            
+                                <div class="flex-child-cross">
+                                    <!-- <a id="dropfavButton" type="button" onclick="event.stopImmediatePropagation(); location.href='/favorites/drop?projectid={{fav.id}}';"></a> -->
+                                    <a class="dropfavButton" onclick="event.stopImmediatePropagation(); location.href='/favorites/drop?projectid={{fav.id}}';"></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+            <div id="results">
+                <div id="noFavs">
+                    <p>You don't currently have any favorite projects.</p>
+                </br>
+                    <a href="search"><button class="redirectSearch">Search projects</button></a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+    </body>
+</html>

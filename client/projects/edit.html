@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>490 Projects</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Update/Delete a Project</h1>
+        </div>
+
+        {% include 'tabs.html' %}
+
+        <div class="content">
+            </br>
+            <h3>Please enter the fields you'd like to update below.</h3>
+
+            <form id="update_form" action="/projects/edit?id={{id}}" method="POST">
+                <label type="text" for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{data.student}}" required>
+
+                <label type="text" for="semester">Semester:</label>
+                <select class="selectSemester" id="semester" name="semester" value="{{data.semester}}">
+                    <option value="Spring">Spring</option>
+                    <option value="Fall">Fall</option>
+                  </select>
+
+                <label type="text" for="year">Year:</label>
+                <input type="text" id="year" name="year" value="{{data.year}}" required pattern="^[12][0-9]{3}$" oninvalid="this.setCustomValidity('Please enter valid year')"
+                oninput="setCustomValidity('')">
+
+                <label for="advisor">Advisor(s)</label>
+                <input type="text" id="advisor" name="advisor" value="{{data.advisors}}" required>
+
+                <label for="title">Project Title</label>
+                <input type="text" id="title" name="title" value="{{data.title}}" required>
+
+                <label for="abstract">Project Abstract</label>
+                </br>
+                <textarea id="abstract" rows="5" cols="60" name="abstract" required>{{data.abstract}}</textarea>
+
+                <label for="homepage">Homepage</label>
+                <input type="text" id="homepage" name="homepage" value="{{data.homepage}}" required>
+
+                <div class="center">
+                    <input type="submit" class="updateButton" name="action" value="Update">
+                </div>
+            </form>
+            </br>
+            <div class="centerDelete">
+                <a href="/projects/delete?id={{id}}"><button class="deleteButton">Delete</button></a>
+            </div>
+        </div>
+    </body>
+</html>

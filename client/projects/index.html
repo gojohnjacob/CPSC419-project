@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>490 Projects</title>
+        <link rel="stylesheet" href="../static/styles.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Previous Projects</h1>
+        </div>
+
+        {% include 'tabs.html' %}
+        
+        <div id="container">
+            <div class="row">
+                <div class="column">
+                    <h2>Fall Semesters</h2>
+                    {% for term in terms %}
+                    {% if term[0] == "Fall" %}
+                    <a class="semesterList" href="/projects?sem={{term[0]}}&year={{term[1]}}">{{term[0] + " " + term[1]}}</a></br>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="column">
+                    <h2>Spring Semesters</h2>
+                    {% for term in terms %}
+                    {% if term[0] == "Spring" %}
+                    <a class="semesterList" href="/projects?sem={{term[0]}}&year={{term[1]}}">{{term[0] + " " + term[1]}}</a></br>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            </br>
+            
+        </div>
+        
+    </body>
+</html>
